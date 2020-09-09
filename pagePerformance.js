@@ -1,9 +1,10 @@
 const puppeteer = require('puppeteer');
 var PropertiesReader = require('properties-reader');
 var properties = PropertiesReader('Configuration.properties');
-const logger = require('pino')();
+var Logger = require('./Logger');
+var logger =  new Logger().getInstance();
 const fs = require('fs');
-const influx = require('./dataModelInflux');
+//const influx = require('./dataModelInflux');
 var performanceTiming;
 
 //utils.readProps(properties)
@@ -64,7 +65,8 @@ function loadtest() {
           );
 
         //pushing data samples to influx db
-        influx.insertSample(performanceTiming);
+        //influx.insertSample(performanceTiming);
+        console.log(JSON.stringify(performanceTiming));
         }
     }
     catch (error) {
@@ -85,4 +87,3 @@ function loadtest() {
 
 // execution of test cases in iterative manner
 loadtest()
-//dashboardtest(testdata.user1.split(",")[0],testdata.user1.split(",")[1])
